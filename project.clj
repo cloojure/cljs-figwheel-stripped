@@ -23,10 +23,7 @@
                                :output-dir           "resources/public/js/compiled/flintstones-dev"
                                :asset-path           "js/compiled/flintstones-dev" ; rel to figwheel default of `resources/public`
                                                         ; ^^^ must match :output-dir
-                               :source-map-timestamp true
-                               ;; To console.log CLJS data-structures make sure you enable devtools in Chrome
-                               ;; https://github.com/binaryage/cljs-devtools
-                               :preloads             [devtools.preload]}}
+                               :source-map-timestamp true }}
                ]}
   :profiles {:dev {; need to add dev source path here to get user.clj loaded
                    :source-paths  ["src" "dev"]
