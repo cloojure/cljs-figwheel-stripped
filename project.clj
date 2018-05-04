@@ -25,11 +25,16 @@
                                                         ; ^^^ must match :output-dir
                                :source-map-timestamp true }}
                ]}
-  :profiles {:dev {; need to add dev source path here to get user.clj loaded
-                   :source-paths  ["src" "dev"]
+  :profiles {:dev {:dependencies [[figwheel-sidecar "0.5.15"]]
+                   :source-paths  ["src" "dev"]   ; need to add dev source path here to get user.clj loaded
                    ;; need to add the compliled assets to the :clean-targets
                    :clean-targets ^{:protect false} ["resources/public/js/compiled"
                                                      "out"
                                                      :target-path]}}
- :jvm-opts ["-Xmx1g" "--add-modules" "java.xml.bind"]
+ :jvm-opts #=(eval (let [version-str (System/getProperty "java.version")]
+                     (cond
+                       (re-find #"^9\." version-str)  ["-Xmx1g" "--add-modules" "java.xml.bind"]
+                       (= "10" version-str)           ["-Xmx1g" "--add-modules" "java.xml.bind"]
+                       :else                          ["-Xmx1g"])))
+
 )
