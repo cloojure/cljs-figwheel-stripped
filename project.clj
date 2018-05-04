@@ -33,8 +33,8 @@
                                                      :target-path]}}
  :jvm-opts #=(eval (let [version-str (System/getProperty "java.version")]
                      (cond
-                       (re-find #"^9\." version-str)  ["-Xmx1g" "--add-modules" "java.xml.bind"]
-                       (= "10" version-str)           ["-Xmx1g" "--add-modules" "java.xml.bind"]
-                       :else                          ["-Xmx1g"])))
+                       (= "10" version-str)           ["-Xmx1g" "--add-modules" "java.xml.bind"] ; java 10
+                       (re-find #"^9\." version-str)  ["-Xmx1g" "--add-modules" "java.xml.bind"] ; java 9.*
+                       :else                          ["-Xmx1g"]))) ; java 8 or below
 
 )
