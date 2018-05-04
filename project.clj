@@ -31,10 +31,12 @@
                    :clean-targets ^{:protect false} ["resources/public/js/compiled"
                                                      "out"
                                                      :target-path]}}
- :jvm-opts #=(eval (let [version-str (System/getProperty "java.version")]
-                     (cond
-                       (= "10" version-str)           ["-Xmx1g" "--add-modules" "java.xml.bind"] ; java 10
-                       (re-find #"^9\." version-str)  ["-Xmx1g" "--add-modules" "java.xml.bind"] ; java 9.*
-                       :else                          ["-Xmx1g"]))) ; java 8 or below
+
+  ; automatically handle `--add-modules` stuff req'd for Java 9 & Java 10
+  :jvm-opts #=(eval (let [version-str (System/getProperty "java.version")]
+                      (cond
+                        (= "10" version-str)           ["-Xmx1g" "--add-modules" "java.xml.bind"] ; java 10
+                        (re-find #"^9\." version-str)  ["-Xmx1g" "--add-modules" "java.xml.bind"] ; java 9.*
+                        :else                          ["-Xmx1g"]))) ; java 8 or below
 
 )
