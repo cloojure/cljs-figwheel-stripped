@@ -27,18 +27,12 @@
                                ;; To console.log CLJS data-structures make sure you enable devtools in Chrome
                                ;; https://github.com/binaryage/cljs-devtools
                                :preloads             [devtools.preload]}}
-
                ]}
-
-  :profiles {:dev {:dependencies  [[binaryage/devtools "0.9.9"]
-                                   [figwheel-sidecar "0.5.15"]
-                                   [com.cemerick/piggieback "0.2.2"]]
-                   ;; need to add dev source path here to get user.clj loaded
+  :profiles {:dev {; need to add dev source path here to get user.clj loaded
                    :source-paths  ["src" "dev"]
-                   :repl-options  {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
                    ;; need to add the compliled assets to the :clean-targets
                    :clean-targets ^{:protect false} ["resources/public/js/compiled"
                                                      "out"
                                                      :target-path]}}
-
-  :jvm-opts ["-Xmx1g"])
+ :jvm-opts ["-Xmx1g" "--add-modules" "java.xml.bind"]
+)
